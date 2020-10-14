@@ -16,13 +16,29 @@ use Auth;
 
 class DasahboardController extends Controller
 {
+    public function index()
+    {
+        if (Auth::check() == false) {
+            return redirect("/login");
+        }
+        
+
+        return view('welcome');
+    }
     public function Produk()
     {
+        if (Auth::check() == false) {
+            return redirect("/login");
+        }
+        
         $produk = $produk = Produk::all()->where('active',1);
         // DD($produk);
+        $total = count($produk);
+        $jumlah = Produk::all()->where('active',1)->sum('jumlah');
         return view('dashboard.produk',
             [
                 'produk'=>$produk,
+                'totProduk'=>$total
             ]
         );
     }
@@ -38,6 +54,9 @@ class DasahboardController extends Controller
     }
     public function addProdukPost(Request $request)
     {
+        if (Auth::check() == false) {
+            return redirect("/login");
+        }
         $produk = new Produk;
         $produk->kd_produk = $request->kd;
         $produk->produk_name = $request->nama;
@@ -55,6 +74,9 @@ class DasahboardController extends Controller
     }
     public function editProduk($id)
     {
+        if (Auth::check() == false) {
+            return redirect("/login");
+        }
         $produk = Produk::all()->where('active',1)->where('id',$id);
         // dd($produk);
         return view('dashboard.editproduk',

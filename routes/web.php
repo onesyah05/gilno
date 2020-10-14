@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DasahboardController;
 use App\Http\Controllers\OngkirController;
+use App\Http\Controllers\LoginController;
 use App\Models\Produk;
 
 /*
@@ -16,9 +17,7 @@ use App\Models\Produk;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DasahboardController::class,'index']);
 
 Route::get('/produk',[DasahboardController::class,'Produk']);
 Route::get('/addProduk',[DasahboardController::class,'addProduk']);
@@ -44,3 +43,9 @@ Route::get('/hapusProduk{id}',function($id)
 //Ongkir Controller
 Route::get('/ongkir',[OngkirController::class,'index']);
 Route::post('/ongkir',[OngkirController::class,'result']);
+
+Route::get('/login',[LoginController::class,'index']);
+
+Route::get('/logout',[LoginController::class,'logout']);
+
+Route::post('/login',[LoginController::class,'postLogin']);
